@@ -12,13 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const produto = new Produto(nome, valor);
         carrinho.adicionarProduto(produto);
-        carrinho.exibirProdutos();
 
+        // Limpar os inputs
         document.getElementById('product-name').value = '';
         document.getElementById('product-value').value = '';
-    });
-
-    document.getElementById('checkout').addEventListener('click', () => {
-        carrinho.finalizarCarrinho();
     });
 });
