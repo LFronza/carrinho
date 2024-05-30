@@ -1,0 +1,16 @@
+{
+    "name": "carrinho-via-prompt",
+    "version": "1.0.0",
+    "description": "Desafio do Carrinho de Compras Inteligente",
+    "main": "src/index.js",
+    "type": "module",
+    "scripts": {
+      "start": "node src/index.js"
+    },
+    "dependencies": {
+      "prompt-sync": "^4.2.0"
+    },
+    "author": "LFronza",
+    "license": "ISC"
+  }
+  
