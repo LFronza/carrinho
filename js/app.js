@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const carrinho = new Carrinho();
+    const carrinhoUI = new CarrinhoUI(carrinho);
 
     document.getElementById('add-product').addEventListener('click', () => {
         const nome = document.getElementById('product-name').value;
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const produto = new Produto(nome, valor);
         carrinho.adicionarProduto(produto);
+        carrinhoUI.atualizarCarrinho();
 
         // Limpar os inputs
         document.getElementById('product-name').value = '';
