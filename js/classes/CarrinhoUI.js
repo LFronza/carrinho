@@ -43,22 +43,25 @@ export default class CarrinhoUI {
 
         const cartContainer = document.getElementById('cart-container');
         const total = this.calculadoraTotal.calcularTotal(this.carrinho.produtos);
-        const productsSummary = document.getElementById('products-summary');
         const totalValue = document.getElementById('total-value');
         const notesSummary = document.getElementById('notes-summary');
-        
+
         if (this.carrinho.produtos.length > 0) {
             cartContainer.style.display = 'block';
-            productsSummary.innerHTML = '';
-            this.carrinho.produtos.forEach(produto => {
-                productsSummary.innerHTML += `- ${produto.nome}: ${produto.valor * produto.quantidade} ${produto.valor * produto.quantidade > 1 ? 'reais' : 'real'} (${produto.quantidade} ${produto.quantidade > 1 ? 'unidades' : 'unidade'})<br>`;
-            });
             totalValue.innerHTML = `<h3>Valor total: ${total} ${total > 1 ? 'reais' : 'real'}</h3>`;
-            notesSummary.innerHTML = `<h4>Pague com:</h4>${this.calculadoraNotas.calcularNotas(total)}`;
-            document.getElementById('checkout-summary').style.display = 'block';
+            notesSummary.innerHTML = '';
+            const notas = this.calculadoraNotas.calcularNotas(total).split('<br>');
+            notas.forEach(nota => {
+                if (nota.trim() !== '') {
+                    const li = document.createElement('li');
+                    li.innerHTML = nota;
+                    notesSummary.appendChild(li);
+                }
+            });
         } else {
             cartContainer.style.display = 'none';
-            document.getElementById('checkout-summary').style.display = 'none';
+            totalValue.innerHTML = '';
+            notesSummary.innerHTML = '';
         }
     }
 }
