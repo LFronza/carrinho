@@ -1,38 +1,41 @@
-class Carrinho {
+export default class Carrinho {
     constructor() {
         this.produtos = [];
+        this.limiteMaximoProdutos = 10; // Definindo um limite máximo de produtos no carrinho
     }
 
     adicionarProduto(produto) {
         const produtoExistente = this.produtos.find(p => p.nome === produto.nome);
         if (produtoExistente) {
-            produtoExistente.quantidade++;
+            if (this.calcularQuantidadeDeProdutos() < this.limiteMaximoProdutos) {
+                produtoExistente.quantidade++;
+            } else {
+                alert("Você atingiu o limite máximo de produtos no carrinho.");
+            }
         } else {
-            produto.quantidade = 1;
-            this.produtos.push(produto);
+            if (this.calcularQuantidadeDeProdutos() < this.limiteMaximoProdutos) {
+                produto.quantidade = 1;
+                this.produtos.push(produto);
+            } else {
+                alert("Você atingiu o limite máximo de produtos no carrinho.");
+            }
         }
+    }
+
+    calcularQuantidadeDeProdutos() {
+        return this.produtos.reduce((total, produto) => total + produto.quantidade, 0);
     }
 
     calcularTotal() {
         return this.produtos.reduce((soma, produto) => soma + produto.valor * produto.quantidade, 0);
     }
 
-    calcularNotas(valor) {
-        const notas = [100, 50, 20, 10, 5, 2, 1];
-        let restante = valor;
-        let notasResumo = '';
-        notas.forEach(nota => {
-            let quantidade = Math.floor(restante / nota);
-            if (quantidade > 0) {
-                notasResumo += `${quantidade} ${quantidade > 1 ? 'notas' : 'nota'} de ${nota} ${nota > 1 ? 'reais' : 'real'}<br>`;
-                restante %= nota;
-            }
-        });
-        return notasResumo;
-    }
-
     incrementarQuantidade(index) {
-        this.produtos[index].quantidade++;
+        if (this.calcularQuantidadeDeProdutos() < this.limiteMaximoProdutos) {
+            this.produtos[index].quantidade++;
+        } else {
+            alert("Você atingiu o limite máximo de produtos no carrinho.");
+        }
     }
 
     decrementarQuantidade(index) {

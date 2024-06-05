@@ -1,6 +1,8 @@
-class CarrinhoUI {
-    constructor(carrinho) {
+export default class CarrinhoUI {
+    constructor(carrinho, calculadoraTotal, calculadoraNotas) {
         this.carrinho = carrinho;
+        this.calculadoraTotal = calculadoraTotal;
+        this.calculadoraNotas = calculadoraNotas;
     }
 
     exibirProdutos() {
@@ -40,7 +42,7 @@ class CarrinhoUI {
         this.exibirProdutos();
 
         const cartContainer = document.getElementById('cart-container');
-        const total = this.carrinho.calcularTotal();
+        const total = this.calculadoraTotal.calcularTotal(this.carrinho.produtos);
         const productsSummary = document.getElementById('products-summary');
         const totalValue = document.getElementById('total-value');
         const notesSummary = document.getElementById('notes-summary');
@@ -52,7 +54,7 @@ class CarrinhoUI {
                 productsSummary.innerHTML += `- ${produto.nome}: ${produto.valor * produto.quantidade} ${produto.valor * produto.quantidade > 1 ? 'reais' : 'real'} (${produto.quantidade} ${produto.quantidade > 1 ? 'unidades' : 'unidade'})<br>`;
             });
             totalValue.innerHTML = `<h3>Valor total: ${total} ${total > 1 ? 'reais' : 'real'}</h3>`;
-            notesSummary.innerHTML = `<h4>Deve ser no mínimo em:</h4>${this.carrinho.calcularNotas(total)}`;
+            notesSummary.innerHTML = `<h4>Pague com:</h4>${this.calculadoraNotas.calcularNotas(total)}`;
             document.getElementById('checkout-summary').style.display = 'block';
         } else {
             cartContainer.style.display = 'none';
